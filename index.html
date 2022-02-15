@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+      @import url("https://fonts.googleapis.com/css2?family=Monoton&family=Roboto:wght@100;400;500;700;900&display=swap");
+
+      @layer base {
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: "Roboto", sans-serif;
+        }
+
+        :root {
+          --color-primary-1: 191, 118, 220;
+          --color-primary-2: 124, 58, 237;
+          --color-primary-3: 167, 139, 250;
+
+          --color-secondary-1: 41, 195, 85;
+          --color-secondary-2: 53, 115, 198;
+          /* --color-secondary-1-light: violet-300, */
+
+          --color-background-back: 248, 250, 255;
+          --color-background-front: 255, 255, 255;
+
+          --color-text-heading: 30, 41, 59;
+          --color-text-heading-light: 170, 170, 170;
+          --color-text-body: 51, 65, 85;
+          --color-text-light: 245, 245, 245;
+        }
+
+        body {
+          @apply bg-background-back;
+        }
+
+        h1 {
+          @apply text-5xl text-heading-main font-bold;
+        }
+
+        h2 {
+          @apply text-3xl text-heading-main;
+        }
+
+        h3 {
+          @apply text-2xl text-heading-main font-bold;
+        }
+
+        h4 {
+          @apply text-base text-heading-light uppercase font-bold;
+        }
+
+        h5 {
+          @apply text-xl text-light capitalize font-bold leading-[1.25rem];
+        }
+
+        p {
+          @apply text-body;
+        }
+
+      }
+
+      @layer components {
+        .button-normal {
+          @apply bg-primary-2 text-light px-4 py-2 rounded-md hover:bg-primary-3;
+        }
+        .button-normal-inverted {
+          @apply bg-primary-1 text-light px-4 py-2 rounded-md hover:opacity-80;
+        }
+        .button-big {
+          @apply px-6 py-4 text-heading-main border-4 border-neutral uppercase text-sm font-bold rounded-md relative;
+          backdrop-filter: blur(2px);
+        }
+        .color-display {
+          @apply h-12 w-12 rounded-full;
+        }
+        .display-container {
+          @apply flex flex-row items-center gap-x-4 w-fit;
+        }
+      }
+
+      @layer utilities {
+        .dark {
+          --color-background-back: 19, 26, 67;
+          --color-background-front: 7, 10, 47;
+
+          --color-text-heading: 227, 232, 239;
+          --color-text-heading-light: 151, 163, 182;
+          --color-text-body: 151, 163, 182;
+          /* --color-text-light: 245, 245, 245; */
+        }
+
+        .style-container {
+          @apply flex flex-col w-fit relative whitespace-nowrap gap-2 bg-background-front py-4 px-6 rounded-3xl h-fit;
+        }
+
+        .card {
+          @apply w-[300px] h-[200px] relative flex flex-col justify-end py-4 px-6 rounded-3xl shadow-lg overflow-clip hover:cursor-pointer hover:scale-105 duration-300;
+        }
+      }
+
+      #theme-toggle svg {
+        fill: black;
+      }
+
+      .dark #theme-toggle svg {
+        fill: white;
+      }
+
+    </style>
+
+    <script>
+      function withOpacity(variableName) {
+        return ({ opacityValue }) => {
+          if (!opacityValue) return `rgb(var(${variableName}))`;
+          return `rgba(var(${variableName}), ${opacityValue})`;
+        };
+      }
+
+      tailwind.config = {
+        theme: {
+          extend: {
+            textColor: {
+              heading: {
+                main: withOpacity("--color-text-heading"),
+                light: withOpacity("--color-text-heading-light"),
+              },
+              body: withOpacity("--color-text-body"),
+              light: withOpacity("--color-text-light"),
+            },
+            backgroundColor: {
+              background: {
+                back: withOpacity("--color-background-back"),
+                front: withOpacity("--color-background-front"),
+              },
+              primary: {
+                1: withOpacity("--color-primary-1"),
+                2: withOpacity("--color-primary-2"),
+                3: withOpacity("--color-primary-3"),
+              },
+              secondary: {
+                1: withOpacity("--color-secondary-1"),
+                2: withOpacity("--color-secondary-2"),
+              },
+            },
+            borderColor: {
+              neutral: withOpacity("--color-text-heading"),
+              theme: withOpacity("--color-primary-1")
+            }
+          },
+        },
+      };
+    </script>
+
+    <title>Test</title>
+  </head>
+  <body>
+    <div id="theme-toggle" class="w-fit hover:cursor-pointer absolute right-2 top-2">
+      <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24"/><path d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg>
+      <svg class="hidden" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><rect fill="none" height="24" width="24"/><path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg>
+    </div>
+
+    <div class="flex flex-row flex-wrap gap-x-12 gap-y-6 p-4 justify-center justify-center md:justify-left">
+      <div class="style-container">
+        <div>
+          <h4>Colour</h4>
+          <hr class="w-full max-w-sm border-1" />
+        </div>
+        <div class="display-container">
+          <div class="color-display bg-primary-1"></div>
+          <p>Primary 1</p>
+        </div>
+        <div class="display-container">
+          <div class="color-display bg-primary-2"></div>
+          <p>Primary 2</p>
+        </div>
+        <div class="display-container">
+          <div class="color-display bg-primary-3"></div>
+          <p>Primary 3</p>
+        </div>
+        <div class="display-container">
+          <div class="color-display bg-secondary-1"></div>
+          <p>Secondary 1</p>
+        </div>
+        <div class="display-container">
+          <div class="color-display bg-secondary-2"></div>
+          <p>Secondary 2</p>
+        </div>
+      </div>
+
+      <div class="style-container">
+        <div>
+          <h4>Typography</h4>
+          <hr class="max-w-sm border-1" />
+        </div>
+
+        <h1>h1 heading</h1>
+        <h2>h2 heading</h2>
+        <h3>h3 heading</h3>
+
+        <p class="whitespace-normal max-w-sm">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente,
+          nisi porro aliquam provident quo eaque consequuntur fugit dolorum quas
+          a?
+        </p>
+      </div>
+
+      <div class="style-container">
+        <!-- <svg 
+        class="h-full w-full absolute top-0 left-0 w-fill"
+        viewBox="0 0 25 20"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
+          <line x1="-2" y1="12" x2="17" y2="22" stroke="gray" stroke-weight="10"/>
+          <line x1="-2" y1="16" x2="30" y2="5" stroke="gray" stroke-weight="10"/>
+        </svg> -->
+        <div>
+          <h4>Buttons</h4>
+          <hr class="max-w-sm border-1" />
+        </div>
+        <div class="display-container relative">
+          <button class="button-normal">Normal</button>
+          <button class="button-normal-inverted">Inverted</button>
+        </div>
+        <button class="button-big">
+          Big Button
+        </button>
+      </div>
+
+      <div class="flex flex-row gap-6 flex-wrap justify-center">
+        <div class="card bg-secondary-2">
+          <svg
+            class="h-full w-full absolute top-0 left-0"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="-10"
+              y="-10"
+              width="100"
+              height="120"
+              stroke="#6A92E3"
+              fill="#6A92E3"
+              stroke-width="20"
+              rx="10"
+              ry="10"
+            ></rect>
+            <circle
+              cx="300"
+              cy="200"
+              r="90"
+              fill="transparent"
+              stroke="#6A92E3"
+              stroke-width="40"
+            />
+          </svg>
+          <h5 class="text-light">content here</h5>
+          <p class="text-light text-sm">Additional content</p>
+        </div>
+        <div class="card bg-secondary-1">
+          <svg
+            class="h-full w-full absolute top-0 left-0"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line x1="30" y1="-30" x2="320" y2="200" stroke-width="30" stroke="#60C685" transform="translate(30, 15)" />
+            <line x1="30" y1="-30" x2="320" y2="200" stroke-width="30" stroke="#60C685" transform="translate(-30, 20)" />
+          </svg>
+          <h5 class="text-light">content here</h5>
+          <p class="text-light text-sm">Additional content</p>
+        </div>
+        <div class="card bg-primary-2">
+          <svg
+            class="h-full w-full absolute top-0 left-0"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line x1="-20" y1="100" x2="200" y2="-20"
+            stroke="#A38CF3"
+            stroke-width="30"/>
+            <polygon 
+            points="230,250 160,100 360, 170"
+            fill="#A38CF3"
+            stroke="#A38CF3"
+            stroke-linejoin="round"
+            stroke-width="20"
+            />
+          </svg>
+          <h5 class="text-light">content here</h5>
+          <p class="text-light text-sm">Additional content</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  const themeToggle = document.querySelector('#theme-toggle')
+  const icons = themeToggle.querySelectorAll('svg')
+  console.log(icons)
+  const body = document.querySelector('body')
+
+  themeToggle.onclick = (e) => {
+    body.classList.toggle('dark')
+    icons.forEach(icon => {
+      icon.classList.toggle('hidden')
+    })
+  }
+
+
+
+</script>
