@@ -356,4 +356,8 @@
       icon.classList.toggle("hidden");
     });
   };
+
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    themeToggle.click()
+  }
 </script>
